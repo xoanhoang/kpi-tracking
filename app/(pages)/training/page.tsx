@@ -22,18 +22,19 @@ export default function TrainingPage() {
 
     const [startDate, setStartDate] = useState<string>(firstDayFormatted.substring(1));
     const [endDate, setEndDate] = useState<string>(lastDayFormatted.substring(1));
+    const [department, setDepartment] = useState<string>('')
 
     const fetchData = async () => {
 
         try {
-            const { payload } = await trainingApiRequest.getList({ dp, startDate, endDate });
+            const { payload } = await trainingApiRequest.getList({ department, startDate, endDate });
             setTrainings(payload);
         } catch (error) {
         }
       };
       useEffect(() => {
         fetchData();
-      }, [endDate, startDate]);
+      }, [endDate, startDate,department]);
 
     return (
         <div>
@@ -51,6 +52,7 @@ export default function TrainingPage() {
                                 <TrainingTable trainings={trainings}
                                     onStartDate={setStartDate}
                                     onEndDate={setEndDate}
+                                    onDepartment={setDepartment}
                                 />
                             </div>
                         </CardContent>
